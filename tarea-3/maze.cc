@@ -16,8 +16,7 @@ using namespace std;
 string file_name;
 
 // Obtiene el mapa del fichero con el nombre pasado como parámetro
-void obtener_mapa_fichero(string file_name, int &filas, int &columnas, vector<vector<int>> &mapa)
-{
+void obtener_mapa_fichero(string file_name, int &filas, int &columnas, vector<vector<int>> &mapa) {
 
     // Abrimos el fichero
     ifstream fichero(file_name);
@@ -27,10 +26,8 @@ void obtener_mapa_fichero(string file_name, int &filas, int &columnas, vector<ve
     mapa.resize(filas, vector<int>(columnas));
 
     // Rellenamos la matriz
-    for (int i = 0; i < filas; i++)
-    {
-        for (int j = 0; j < columnas; j++)
-        {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
             fichero >> mapa[i][j];
         }
     }
@@ -38,18 +35,15 @@ void obtener_mapa_fichero(string file_name, int &filas, int &columnas, vector<ve
 }
 
 // Algoritmo recursivo sin almacén (ingenuo)
-int maze_naive(vector<vector<int>> &mapa, int filas, int columnas, int pos_fila, int pos_columna)
-{
+int maze_naive(vector<vector<int>> &mapa, int filas, int columnas, int pos_fila, int pos_columna) {
 
     // Caso especial: nos salimos del laberinto o estamos en una casilla inaccesible
-    if (pos_fila >= filas || pos_columna >= columnas || mapa[pos_fila][pos_columna] == 0)
-    {
+    if (pos_fila >= filas || pos_columna >= columnas || mapa[pos_fila][pos_columna] == 0) {
         return -1;
     }
 
     // Caso base: hemos llegado al destino
-    if (pos_fila == filas - 1 && pos_columna == columnas - 1)
-    {
+    if (pos_fila == filas - 1 && pos_columna == columnas - 1) {
         return 1;
     }
 
@@ -61,29 +55,23 @@ int maze_naive(vector<vector<int>> &mapa, int filas, int columnas, int pos_fila,
 
     // Paso 2: comprobar si los movimientos son válidos (llegan a la meta)
     vector<int> caminos_posibles;
-    if (mover_derecha != -1)
-    {
+    if (mover_derecha != -1) {
         caminos_posibles.push_back(mover_derecha);
     }
-    if (mover_abajo != -1)
-    {
+    if (mover_abajo != -1) {
         caminos_posibles.push_back(mover_abajo);
     }
-    if (mover_diagonal != -1)
-    {
+    if (mover_diagonal != -1) {
         caminos_posibles.push_back(mover_diagonal);
     }
 
     // Paso 3: seleccionamos el mejor movimiento (es decir, el camino más corto que llegue a la meta)
-    if (caminos_posibles.empty())
-    {
+    if (caminos_posibles.empty()) {
         return -1;
     }
     int mejor_caso = caminos_posibles[0];
-    for (size_t i = 1; i < caminos_posibles.size(); i++)
-    { // Uso size_t porque da warnring si uso int
-        if (caminos_posibles[i] < mejor_caso)
-        {
+    for (size_t i = 1; i < caminos_posibles.size(); i++){ // Uso size_t porque da warnring si uso int
+        if (caminos_posibles[i] < mejor_caso) {
             mejor_caso = caminos_posibles[i];
         }
     }
@@ -93,47 +81,39 @@ int maze_naive(vector<vector<int>> &mapa, int filas, int columnas, int pos_fila,
 }
 
 // Muestra qué se debe poner por terminal para que funcione correctamente
-void show_usage()
-{
+void show_usage() {
     cout << "Usage: " << endl
          << "maze -f file" << endl;
 }
 
 // Valida y analiza los argumentos de la orden descrita por terminal
-void check_argumentos(int argc, char *argv[])
-{
+void check_argumentos(int argc, char *argv[]) {
 
     // Validación para pocos argumentos
-    if (argc < 2)
-    {
+    if (argc < 2) {
         show_usage();
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 1; i < argc; i++)
-    {
+    for (int i = 1; i < argc; i++) {
         string arg = argv[i];
 
         // Validación del fichero
-        if (arg == "-f")
-        {
+        if (arg == "-f") {
             i++;
-            if (i >= argc)
-            {
+            if (i >= argc) {
                 cerr << "ERROR: missing filename. " << endl;
                 show_usage();
                 exit(EXIT_FAILURE);
             }
             file_name = argv[i];
-            if (file_name.empty())
-            {
+            if (file_name.empty()) {
                 cerr << "ERROR: missing filename. " << endl;
                 show_usage();
                 exit(EXIT_FAILURE);
             }
             ifstream open_file(file_name);
-            if (!open_file)
-            {
+            if (!open_file) {
                 cerr << "ERROR: can't open file : " << file_name << "." << endl;
                 show_usage();
                 exit(EXIT_FAILURE);
@@ -141,8 +121,7 @@ void check_argumentos(int argc, char *argv[])
         }
 
         // Opción incorrecta
-        else
-        {
+        else {
             cerr << "ERROR: unknown option " << arg << "." << endl;
             show_usage();
             exit(EXIT_FAILURE);
@@ -151,8 +130,7 @@ void check_argumentos(int argc, char *argv[])
 }
 
 // Ejecución principal
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
     // Comprueba los argumentos de la orden
     check_argumentos(argc, argv);
@@ -162,10 +140,8 @@ int main(int argc, char *argv[])
     vector<vector<int>> mapa;
     obtener_mapa_fichero(file_name, filas, columnas, mapa);
 
-    // Iniciamos temporizador
+    // Algoritmo ingenuo resuelve el problema (medimos también el tiempo)
     auto inicio = chrono::steady_clock::now();
-
-    // Algoritmo ingenuo resuelve el problema 
     resultado = maze_naive(mapa, filas, columnas, 0, 0);
     auto fin = chrono::steady_clock::now();
     auto segundos = chrono::duration_cast<chrono::seconds>(fin - inicio);

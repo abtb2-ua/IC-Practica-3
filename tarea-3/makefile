@@ -7,7 +7,7 @@ maze: maze.cc
 
 # Hay que poner el tamaño delante del .maze para probar dicho laberinto
 run: maze
-	./maze -f 16.maze
+	./maze -f 20.maze
 
 clean:
 	rm -f maze *~
