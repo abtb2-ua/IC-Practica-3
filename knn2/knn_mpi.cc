@@ -110,12 +110,33 @@ bool parseArgs(int argc, char** argv, int worldSize, Params& p)
     if (p.speculative)
     {
         if (worldSize < 2) return false;
-        // La evaluación final es ~16.5 % del trabajo secuencial: reparto inicial proporcional.
-        if (p.evalProcs <= 0)
-            p.evalProcs = std::max(1, static_cast<int>(std::lround(0.165 * worldSize)));
-        p.evalProcs = std::min(p.evalProcs, worldSize - 1);
+        // evalProcs <= 0: automático. Se calcula en main() con autoEvalProcs(), una vez
+        // conocidos los tamaños reales de los conjuntos.
+        if (p.evalProcs > 0) p.evalProcs = std::min(p.evalProcs, worldSize - 1);
     }
     return true;
+}
+
+// Fracción del trabajo que corresponde a la evaluación final, estimada por número de
+// distancias calculadas (coste dominante de kNN):
+//   ajuste:     maxK * sum_folds |val| * |train_fold| = maxK * nTune * (nTune - nTune/folds)
+//   evaluación: nTest * nTrain
+// Con los valores por defecto (20000, 5, 10, 10000, 60000) sale ~15.8 %, coherente con el
+// ~16.5 % medido con gprof; para otros tamaños cambia mucho (p. ej. 5000/2000 -> ~37 %).
+double evalFraction(std::size_t nTune, unsigned int folds, unsigned int maxK,
+                    std::size_t nTest, std::size_t nTrain)
+{
+    const double t = static_cast<double>(nTune);
+    const double tune = maxK * t * (t - t / folds);
+    const double eval = static_cast<double>(nTest) * static_cast<double>(nTrain);
+    return eval / (eval + tune);
+}
+
+// Procesos de evaluación proporcionales a su carga: al menos 1 y dejando al menos 1 al ajuste.
+int autoEvalProcs(double fraction, int worldSize)
+{
+    int n = static_cast<int>(std::lround(fraction * worldSize));
+    return std::min(std::max(1, n), worldSize - 1);
 }
 
 bool loadDataset(std::vector<TSample>& train, std::vector<TSample>& test)
@@ -452,7 +473,7 @@ void printReport(const Params& p, int size, const Outcome& out, double totalTime
         sumComm += a[2];
         sumWasted += (long long)a[5];
     }
-    std::cout << std::defaultfloat;
+    std::cout << std::defaultfloat << std::setprecision(6); // setprecision(2) es persistente: restaurar.
 
     // Línea fácil de procesar para las gráficas del paso e.
     std::cout << "RESULT," << (p.speculative ? "spec" : "data") << "," << size << ","
@@ -497,6 +518,15 @@ int main(int argc, char** argv)
     test.erase(test.begin() + std::min<std::size_t>(p.nTest, test.size()), test.end());
     std::vector<TSample> tuneSet(train.begin(),
                                  train.begin() + std::min<std::size_t>(train.size(), p.nTune));
+
+    if (p.speculative && p.evalProcs <= 0)
+    {
+        double f = evalFraction(tuneSet.size(), p.folds, p.maxK, test.size(), train.size());
+        p.evalProcs = autoEvalProcs(f, size);
+        if (rank == ROOT)
+            std::cout << "Fraccion estimada de evaluacion: " << f * 100 << "% -> " << p.evalProcs
+                      << " proceso(s) de evaluacion" << std::endl;
+    }
 
     Stats st;
     st.compute = MPI_Wtime() - t0; // La carga es trabajo replicado en todos los procesos.

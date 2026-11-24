@@ -170,7 +170,8 @@ double KNN::classifyAndEvaluate(const std::vector<TSample> &test, std::vector<in
     int matches = 0;
     for(int i=0;i<test.size();i++)
     {
-        std::cout<<i<<"/"<<test.size()<<"\r"<<std::flush;
+        // Eliminada la impresión de progreso por muestra (cout + flush en cada iteración):
+        // penalizaba al secuencial frente a cv_mpi y distorsionaba las medidas.
         int label = this->classify(test[i]);
         labels.push_back(label);
         
