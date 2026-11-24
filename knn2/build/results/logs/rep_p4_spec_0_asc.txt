@@ -1,0 +1,17 @@
+[LAPTOP-VV21GLKB:07823] MCW rank 0 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07823] MCW rank 1 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07823] MCW rank 2 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07823] MCW rank 3 is not bound (or bound to all available processors)
+Uso: mpirun -np P ./cv_mpi [nTune folds maxK nTest data|spec evalProcs asc|desc chunk]
+(el modo spec necesita al menos 2 procesos)
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[48724,1],2]
+  Exit code:    1
+--------------------------------------------------------------------------

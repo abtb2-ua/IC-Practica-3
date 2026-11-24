@@ -1,0 +1,28 @@
+Fraccion estimada de evaluacion: 27.2727% -> 1 proceso(s) de evaluacion
+Modo spec con 4 procesos (1 de evaluación), ajuste con 10000 muestras, 5 folds, K en [1, 10], 5000 muestras de test
+K: 10 Accuracy: 94.2% completed in 8.41674 seconds
+K: 9 Accuracy: 94.25% completed in 8.4892 seconds
+[eval] reinicio: K 10 -> 9 (880 muestras descartadas en este proceso)
+K: 8 Accuracy: 94.41% completed in 8.67436 seconds
+[eval] reinicio: K 9 -> 8 (430 muestras descartadas en este proceso)
+K: 7 Accuracy: 94.63% completed in 8.89668 seconds
+[eval] reinicio: K 8 -> 7 (430 muestras descartadas en este proceso)
+K: 6 Accuracy: 94.78% completed in 8.53543 seconds
+[eval] reinicio: K 7 -> 6 (440 muestras descartadas en este proceso)
+K: 5 Accuracy: 94.78% completed in 8.66024 seconds
+K: 4 Accuracy: 94.86% completed in 8.74908 seconds
+[eval] reinicio: K 6 -> 4 (860 muestras descartadas en este proceso)
+K: 3 Accuracy: 95.04% completed in 8.86593 seconds
+[eval] reinicio: K 4 -> 3 (430 muestras descartadas en este proceso)
+K: 2 Accuracy: 94.11% completed in 8.41316 seconds
+K: 1 Accuracy: 94.94% completed in 8.56952 seconds
+Best k: 3 found in 86.271 seconds
+Test accuracy: 0.9628 completed in 171.605 seconds
+Total elapsed time 173.81 seconds
+
+rank  rol      computo  comunic.  termina  reinicios  descartadas
+   0  ajuste     87.55      0.85   173.81          0            0
+   1  ajuste     87.69      0.70    88.48          0            0
+   2  ajuste     87.69      0.71    88.48          0            0
+   3  eval      173.76      0.01   173.81          6         3470
+RESULT,spec,4,1,10000,5,10,5000,desc,3,0.9628,173.81,86.271,171.605,436.696,2.2618,3470

@@ -1,0 +1,21 @@
+Modo data con 4 procesos, ajuste con 10000 muestras, 5 folds, K en [1, 10], 5000 muestras de test
+K: 1 Accuracy: 94.94% completed in 5.72331 seconds
+K: 2 Accuracy: 94.11% completed in 6.26271 seconds
+K: 3 Accuracy: 95.04% completed in 6.25732 seconds
+K: 4 Accuracy: 94.86% completed in 6.30377 seconds
+K: 5 Accuracy: 94.78% completed in 6.65646 seconds
+K: 6 Accuracy: 94.78% completed in 6.32823 seconds
+K: 7 Accuracy: 94.63% completed in 6.2088 seconds
+K: 8 Accuracy: 94.41% completed in 6.12594 seconds
+K: 9 Accuracy: 94.25% completed in 6.45055 seconds
+K: 10 Accuracy: 94.2% completed in 6.62367 seconds
+Best k: 3 found in 62.9414 seconds
+Test accuracy: 0.9628 completed in 23.9059 seconds
+Total elapsed time 89.0493 seconds
+
+rank  rol      computo  comunic.  termina  reinicios  descartadas
+   0  todos      88.31      0.67    89.05          0            0
+   1  todos      87.89      1.04    89.00          0            0
+   2  todos      88.33      0.65    89.05          0            0
+   3  todos      88.04      0.89    89.00          0            0
+RESULT,data,4,0,10000,5,10,5000,asc,3,0.9628,89.0493,62.9414,23.9059,352.566,3.24761,0

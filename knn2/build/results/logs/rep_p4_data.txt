@@ -1,0 +1,25 @@
+[LAPTOP-VV21GLKB:07805] MCW rank 2 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07805] MCW rank 3 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07805] MCW rank 0 is not bound (or bound to all available processors)
+[LAPTOP-VV21GLKB:07805] MCW rank 1 is not bound (or bound to all available processors)
+Modo data con 4 procesos, ajuste con 5000 muestras, 5 folds, K en [1, 10], 2000 muestras de test
+K: 1 Accuracy: 94.1% completed in 1.41753 seconds
+K: 2 Accuracy: 93.3% completed in 1.46002 seconds
+K: 3 Accuracy: 94.2% completed in 1.46229 seconds
+K: 4 Accuracy: 94.12% completed in 1.54939 seconds
+K: 5 Accuracy: 94.06% completed in 1.49499 seconds
+K: 6 Accuracy: 93.98% completed in 1.48581 seconds
+K: 7 Accuracy: 93.78% completed in 1.46197 seconds
+K: 8 Accuracy: 93.62% completed in 1.48003 seconds
+K: 9 Accuracy: 93.46% completed in 1.46782 seconds
+K: 10 Accuracy: 93.3% completed in 1.5028 seconds
+Best k: 3 found in 14.7833 seconds
+Test accuracy: 0.9625 completed in 9.11197 seconds
+Total elapsed time 25.9903 seconds
+
+rank  rol      computo  comunic.  termina  reinicios  descartadas
+   0  todos      25.53      0.42    25.99          0            0
+   1  todos      25.46      0.49    25.99          0            0
+   2  todos      25.68      0.26    25.97          0            0
+   3  todos      25.69      0.27    25.99          0            0
+RESULT,data,4,0,5000,5,10,2000,asc,3,0.9625,25.9903,14.7833,9.11197,102.364,1.43901,0
