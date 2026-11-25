@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     // PASO 2: Obtenemos el mapa del fichero (el proceso principal tiene rank=0)
-    int filas, columnas, profundidad = 5, resultado; // Profundidad le he metido 6 por defecto
+    int filas, columnas, profundidad = 6, resultado; // Profundidad le he metido 6 por defecto
     vector<int> mapa;
     if (rank == 0) {
         check_argumentos(argc, argv);
